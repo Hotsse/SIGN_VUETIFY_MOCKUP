@@ -1,37 +1,37 @@
 <template>
   <div>
-    <v-rows>
+    <div>
       <v-date-picker
-        v-model="date"
+        v-model="selectedDate"
+        :allowed-dates="allowedOnlyWeekday"
         full-width
         color="primary"
         locale="ko-kr"
         @click:date="selectDate"
       />
-    </v-rows>
-    <v-rows>
+    </div>
+    <div>
       <v-calendar
         color="primary"
         locale="ko-kr"
         type="day"
         :value="selectedDate"
         :events="events"
-        :event-ripple="false"
         @change="getEvents"
         @mousedown:time="startTime"
         @mousemove:time="mouseMove"
         @mouseup:time="endDrag"
         @mouseleave.native="cancelDrag"
       />
-    </v-rows>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-    selectedDate: new Date(),
+    selectedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    disabledDates: { weekdays: [1, 7] },
     value: '',
     events: [],
     dragStart: null,
@@ -77,8 +77,6 @@ export default {
     endDrag () {
       // 시간 범위가 지정되지 않은 선택은 삭제 처리
       this.events = this.events.filter(event => event.start < event.end)
-
-      console.log(this.events)
 
       this.dragTime = null
       this.createEvent = null
@@ -127,6 +125,10 @@ export default {
     },
     selectDate (date) {
       this.selectedDate = date
+    },
+    allowedOnlyWeekday (val) {
+      // 평일만 선택 활성화
+      return [1, 2, 3, 4, 5].includes(new Date(Date.parse(val)).getDay())
     }
   }
 }
