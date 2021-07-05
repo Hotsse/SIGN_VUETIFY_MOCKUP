@@ -48,6 +48,12 @@
       >
         <v-icon>mdi-minus</v-icon>
       </v-btn>
+      <v-btn
+        icon
+        @click="$vuetify.theme.dark=!$vuetify.theme.dark"
+      >
+        <v-icon>mdi-theme-light-dark</v-icon>
+      </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-btn
@@ -120,12 +126,17 @@ export default {
           icon: 'mdi-chart-bubble',
           title: '예약 시스템',
           to: '/calendar'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: '예약 시스템2',
+          to: '/calendar2'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: '전자결재 Vuetify MockUp'
     }
   }
 }

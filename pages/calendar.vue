@@ -1,36 +1,111 @@
 <template>
   <div>
-    <div>
-      <v-date-picker
-        v-model="selectedDate"
-        :allowed-dates="allowedOnlyWeekday"
-        full-width
-        color="primary"
-        locale="ko-kr"
-        @click:date="selectDate"
-      />
-    </div>
-    <div>
-      <v-calendar
-        color="primary"
-        locale="ko-kr"
-        type="day"
-        :value="selectedDate"
-        :events="events"
-        @change="getEvents"
-        @mousedown:time="startTime"
-        @mousemove:time="mouseMove"
-        @mouseup:time="endDrag"
-        @mouseleave.native="cancelDrag"
-      />
-    </div>
+    <v-row>
+      <v-col
+        lg="4"
+      >
+        <v-row>
+          <v-col>
+            <DatePicker
+              @select-date="selectDate"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="pt-1 pb-0">
+            <v-select
+              :items="buildings"
+              item-text="text"
+              item-value="value"
+              label="회의실 선택"
+              filled
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="pt-0">
+            <v-divider />
+            <v-list>
+              <v-list-item-group>
+                <v-list-item
+                  v-for="(room, i) in mtRooms"
+                  :key="i"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>- {{ i + 1 }}) {{ room.title }} ({{ room.count }}명)</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+            <v-divider />
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col
+        lg="8"
+      >
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="selectedDate"
+              label="날짜"
+              readonly
+            />
+            <v-select
+              :items="[{text: '일반회의', value: '000001'}, {text: '정기회의', value: '000002'}]"
+              item-text="text"
+              item-value="value"
+              label="구분"
+            />
+            <v-text-field
+              v-model="selectedTime"
+              label="시간"
+              readonly
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-calendar
+              color="primary"
+              locale="ko-kr"
+              type="day"
+              first-time="07:00"
+              interval-count="17"
+              :value="selectedDate"
+              :events="events"
+              @change="getEvents"
+              @mousedown:time="startTime"
+              @mousemove:time="mouseMove"
+              @mouseup:time="endDrag"
+              @mouseleave.native="cancelDrag"
+            />
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
+import DatePicker from '@/components/util/time/DatePicker.vue'
 export default {
+  components: {
+    DatePicker
+  },
   data: () => ({
+    buildings: [
+      { text: '넥슨 10F', value: '123456' },
+      { text: '넥슨 9F', value: '123455' }
+    ],
+    mtRooms: [
+      { title: '넥슨 10F - A1', count: 6 },
+      { title: '넥슨 10F - A2', count: 8 },
+      { title: '넥슨 10F - A3', count: 8 }
+    ],
     selectedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    selectedStartTime: null,
+    selectedEndTime: null,
     disabledDates: { weekdays: [1, 7] },
     value: '',
     events: [],
@@ -39,6 +114,11 @@ export default {
     createStart: null,
     extendOriginal: null
   }),
+  computed: {
+    selectedTime () {
+      return `${this.selectedStartTime} ~ ${this.selectedEndTime}`
+    }
+  },
   methods: {
     startTime (tms) {
       const mouse = this.toTime(tms)
@@ -72,6 +152,8 @@ export default {
 
         this.createEvent.start = min
         this.createEvent.end = max
+        this.selectedStartTime = (new Date(new Date(min) - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(11, 5)
+        this.selectedEndTime = (new Date(new Date(max) - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(11, 5)
       }
     },
     endDrag () {
