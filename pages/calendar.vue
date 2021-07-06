@@ -46,22 +46,72 @@
       >
         <v-row>
           <v-col>
-            <v-text-field
-              v-model="selectedDate"
-              label="날짜"
-              readonly
-            />
-            <v-select
-              :items="[{text: '일반회의', value: '000001'}, {text: '정기회의', value: '000002'}]"
-              item-text="text"
-              item-value="value"
-              label="구분"
-            />
-            <v-text-field
-              v-model="selectedTime"
-              label="시간"
-              readonly
-            />
+            <v-row>
+              <v-col lg="3">
+                <v-text-field
+                  v-model="selectedDate"
+                  label="날짜"
+                  readonly
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col lg="3">
+                <v-select
+                  :items="[{text: '일반회의', value: '000001'}, {text: '정기회의', value: '000002'}]"
+                  item-text="text"
+                  item-value="value"
+                  label="구분"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col lg="3">
+                <v-text-field
+                  v-model="selectedTime"
+                  label="시간"
+                  readonly
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col lg="3" class="pb-0">
+                <v-autocomplete
+                  label="참석자"
+                  :items="seachEmps"
+                  @change="selectAttendant"
+                />
+              </v-col>
+              <v-col lg="1">
+                <v-btn
+                  class="mt-3"
+                  color="primary"
+                  @click="addAttendant"
+                >
+                  추가
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row class="mt-0">
+              <v-col>
+                <v-chip
+                  v-for="(attendant, i) in selectedAttendants"
+                  :key="i"
+                  class="mr-1"
+                >
+                  <span class="mr-1">{{ attendant.empNm }}</span>
+                  <span>
+                    <v-btn
+                      icon
+                      x-small
+                      @click="deleteAttendant(attendant)"
+                    >
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </span>
+                </v-chip>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
         <v-row>
@@ -103,6 +153,13 @@ export default {
       { title: '넥슨 10F - A2', count: 8 },
       { title: '넥슨 10F - A3', count: 8 }
     ],
+    seachEmps: [
+      { text: '최다희', value: '14841' },
+      { text: '최민호', value: '23237' },
+      { text: '박민성', value: '19063' },
+      { text: '윤호세', value: '24687' }
+    ],
+    selectedAttendants: [],
     selectedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     selectedStartTime: null,
     selectedEndTime: null,
@@ -120,6 +177,18 @@ export default {
     }
   },
   methods: {
+    selectAttendant (empNo) {
+      const empNm = this.seachEmps.filter(emp => emp.value === empNo).map(emp => emp.text)[0]
+      this.selectedAttendant = { empNo, empNm }
+    },
+    addAttendant () {
+      if (!this.selectedAttendants.includes(this.selectedAttendant)) {
+        this.selectedAttendants.push(this.selectedAttendant)
+      }
+    },
+    deleteAttendant (emp) {
+      this.selectedAttendants = this.selectedAttendants.filter(attendant => attendant !== emp)
+    },
     startTime (tms) {
       const mouse = this.toTime(tms)
 
