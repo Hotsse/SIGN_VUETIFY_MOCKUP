@@ -1,6 +1,27 @@
 <template>
   <div>
     <div>
+      <v-card class="d-inline-block" width="150px">
+        <v-card-subtitle class="grey darken-2 text--darken-2 text-center pa-1">
+          신청
+        </v-card-subtitle>
+        <v-card-text class="text-center">
+          <div>
+            윤호세 팀원<br>
+            (재무그룹웨어팀)
+          </div>
+          <!--
+          <v-chip label x-small color="primary">
+            신청
+          </v-chip>
+          -->
+          <div>
+            2021-07-16
+          </div>
+        </v-card-text>
+      </v-card>
+    </div>
+    <div>
       <v-btn
         fab
         text
