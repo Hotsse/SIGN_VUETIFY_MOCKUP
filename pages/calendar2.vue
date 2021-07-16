@@ -1,25 +1,13 @@
 <template>
   <div>
     <div>
-      <v-card class="d-inline-block" width="150px">
-        <v-card-subtitle class="grey darken-2 text--darken-2 text-center pa-1">
-          신청
-        </v-card-subtitle>
-        <v-card-text class="text-center">
-          <div>
-            윤호세 팀원<br>
-            (재무그룹웨어팀)
-          </div>
-          <!--
-          <v-chip label x-small color="primary">
-            신청
-          </v-chip>
-          -->
-          <div>
-            2021-07-16
-          </div>
-        </v-card-text>
-      </v-card>
+      <h3 class="mb-1">
+        결재선
+      </h3>
+      <v-divider />
+      <div class="text-center mt-3">
+        <ApprGrpLines :appr-grp-lines="apprGrpLines" />
+      </div>
     </div>
     <div>
       <v-btn
@@ -64,7 +52,11 @@
 </template>
 
 <script>
+import ApprGrpLines from '@/components/business/appr/ApprGrpLines.vue'
 export default {
+  components: {
+    ApprGrpLines
+  },
   data: () => ({
     weekday: [1, 2, 3, 4, 5],
     value: '',
@@ -72,7 +64,76 @@ export default {
     dragStart: null,
     createEvent: null,
     createStart: null,
-    extendOriginal: null
+    extendOriginal: null,
+    selectedDate: null,
+    apprGrpLines: [
+      {
+        grpNm: null,
+        grpStsNm: '상신',
+        apprLines: [
+          {
+            empNo: 24687,
+            empNm: '윤호세',
+            dutyNm: '팀원',
+            deptNm: '재무그룹웨어팀'
+          }
+        ]
+      },
+      {
+        grpNm: null,
+        grpStsNm: '결재',
+        apprLines: [
+          {
+            empNo: 19063,
+            empNm: '박민성',
+            dutyNm: '팀원',
+            deptNm: '재무그룹웨어팀'
+          },
+          {
+            empNo: 23237,
+            empNm: '최민호3',
+            dutyNm: '팀원',
+            deptNm: '재무그룹웨어팀'
+          }
+        ]
+      },
+      {
+        grpNm: null,
+        grpStsNm: '결재',
+        apprLines: [
+          {
+            empNo: 14838,
+            empNm: '최다희',
+            dutyNm: '팀장',
+            deptNm: '재무그룹웨어팀'
+          }
+        ]
+      },
+      {
+        grpNm: '경비/매입 담당그룹',
+        grpStsNm: '담당',
+        apprLines: [
+          {
+            empNo: 11111,
+            empNm: '나회계',
+            dutyNm: '팀원',
+            deptNm: '회계2팀'
+          },
+          {
+            empNo: 22222,
+            empNm: '박회계',
+            dutyNm: '팀원',
+            deptNm: '회계2팀'
+          },
+          {
+            empNo: 33333,
+            empNm: '정회계',
+            dutyNm: '팀원',
+            deptNm: '회계2팀'
+          }
+        ]
+      }
+    ]
   }),
   methods: {
     startTime (tms) {
