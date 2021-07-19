@@ -6,7 +6,10 @@
       </h3>
       <v-divider />
       <div class="text-center mt-3">
-        <ApprGrpLines :appr-grp-lines="apprGrpLines" />
+        <ApprGrpLines
+          :appr-grp-lines="apprGrpLines"
+          :appr-to-ccs="apprToCcs"
+        />
       </div>
     </div>
     <div>
@@ -66,6 +69,25 @@ export default {
     createStart: null,
     extendOriginal: null,
     selectedDate: null,
+    apprToCcs: {
+      tos: [
+        {
+          empDeptYn: 'D',
+          cmpCd: 'NX',
+          empDeptNo: 51212,
+          empDeptNm: '재무그룹웨어팀'
+        }
+      ],
+      ccs: [
+        {
+          empDeptYn: 'E',
+          cmpCd: 'NX',
+          empDeptNo: 24687,
+          empDeptNm: '윤호세'
+        }
+      ],
+      bccs: []
+    },
     apprGrpLines: [
       {
         grpNm: null,
