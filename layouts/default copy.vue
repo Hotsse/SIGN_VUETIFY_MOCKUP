@@ -7,17 +7,6 @@
       fixed
       app
     >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="text-h5 font-weight-bold">
-            <v-icon>mdi-draw</v-icon> {{ title }}
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            부제목이 들어갑니다
-          </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider />
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -48,37 +37,30 @@
       fixed
       app
     >
-      <v-btn
-        fab
-        small
-        absolute
-        left
-        bottom
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-spacer />
-      <v-menu offset-y>
-        <template #activator="{ on, attrs }">
-          <a
-            class="white--text"
-            v-bind="attrs"
-            v-on="on"
-          >
-            신청메뉴 <v-icon>mdi-chevron-down</v-icon>
-          </a>
-        </template>
-        <v-list>
-          <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-          >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <!--
+      <v-col cols="1">
+        <v-toolbar-title class="text-h5 font-weight-bold" v-text="title" />
+      </v-col>
+      <v-col cols="1">
+        <v-menu offset-y>
+          <template #activator="{ on, attrs }">
+            <a
+              class="white--text"
+              v-bind="attrs"
+              v-on="on"
+            >
+              신청메뉴 <v-icon>mdi-chevron-down</v-icon>
+            </a>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in items"
+              :key="index"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-col>
       <v-col cols="3" class="ml-n12">
         <v-autocomplete
           label="메뉴 이름을 검색해 보세요"
@@ -86,7 +68,8 @@
           prepend-inner-icon="mdi-magnify"
         />
       </v-col>
-      -->
+      <v-spacer />
+      <v-spacer />
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn
         icon
@@ -100,16 +83,6 @@
       >
         <v-icon>mdi-theme-light-dark</v-icon>
       </v-btn>
-      <v-avatar
-        class="mr-2"
-        color="primary"
-        size="40"
-      >
-        윤
-      </v-avatar>
-      <span>
-        Hi, <span class="font-weight-bold">윤호세</span>
-      </span>
       <!--
       <v-btn
         icon
@@ -154,7 +127,7 @@
 export default {
   data () {
     return {
-      clipped: false,
+      clipped: true,
       drawer: false,
       items: [
         {
