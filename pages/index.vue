@@ -7,10 +7,10 @@
       </v-card>
       <v-card>
         <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
+          차세대 전자결재 서비스, Visual Mock Up Project
         </v-card-title>
         <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
+          <p>Vuetify + Nuxt.js 기반의 재무그룹웨어팀 차세대 전자결재 서비스 목업 프로젝트 입니다.</p>
           <p>
             For more information on Vuetify, check out the <a
               href="https://vuetifyjs.com"
