@@ -10,10 +10,12 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h5 font-weight-bold">
-            <v-icon>mdi-draw</v-icon> {{ title }}
+            <v-icon :x-large="!miniVariant">
+              mdi-draw
+            </v-icon> {{ title }}
           </v-list-item-title>
-          <v-list-item-subtitle>
-            부제목이 들어갑니다
+          <v-list-item-subtitle v-if="!miniVariant">
+            Please keep social distancing!
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -42,31 +44,30 @@
           </v-btn>
         </div>
       </template>
+
+      <v-btn
+        fab
+        small
+        :style="{position:'fixed', top: [miniVariant ? 30 : 60] + 'px', right: '-15px'}"
+        @click.stop="miniVariant = !miniVariant"
+      >
+        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+      </v-btn>
     </v-navigation-drawer>
     <v-app-bar
       :clipped-left="clipped"
       fixed
       app
     >
-      <v-btn
-        fab
-        small
-        absolute
-        left
-        bottom
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
       <v-spacer />
-      <v-menu offset-y>
+      <v-menu offset-y left>
         <template #activator="{ on, attrs }">
           <a
             class="white--text"
             v-bind="attrs"
             v-on="on"
           >
-            신청메뉴 <v-icon>mdi-chevron-down</v-icon>
+            Menu <v-icon>mdi-chevron-down</v-icon>
           </a>
         </template>
         <v-list>
@@ -86,29 +87,17 @@
           prepend-inner-icon="mdi-magnify"
         />
       </v-col>
-      -->
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click="$vuetify.theme.dark=!$vuetify.theme.dark"
-      >
-        <v-icon>mdi-theme-light-dark</v-icon>
-      </v-btn>
+      -->
       <v-avatar
-        class="mr-2"
+        class="ml-3 mr-2"
         color="primary"
         size="40"
       >
-        윤
+        Yun
       </v-avatar>
       <span>
-        Hi, <span class="font-weight-bold">윤호세</span>
+        Hi, <span class="font-weight-bold">Hose Yun</span>
       </span>
       <!--
       <v-btn
@@ -118,6 +107,35 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
       -->
+      <v-menu
+        offset-x
+        left
+        :close-on-content-click="false"
+      >
+        <template #activator="{ on, attrs }">
+          <v-btn
+            fab
+            small
+            absolute
+            bottom
+            right
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-cog</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <v-list-item-title>
+              <v-switch
+                v-model="$vuetify.theme.dark"
+                label="Dark Mode"
+              />
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -186,7 +204,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: '전자결재'
+      title: 'SIGN WEB'
     }
   }
 }
