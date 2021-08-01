@@ -187,7 +187,12 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: '경비 신청(Stepper)',
+          title: '경비 신청(Stepper,Vertical)',
+          to: '/expense-stepper-v'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: '경비 신청(Stepper,Horizontal)',
           to: '/expense-stepper'
         },
         {

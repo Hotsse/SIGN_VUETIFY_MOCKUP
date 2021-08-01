@@ -4,18 +4,18 @@
     <v-card-text>
       <v-simple-table
         fixed-header
-        height="300px"
+        height="500px"
       >
         <template #default>
           <colgroup>
-            <col width="5%"></col>
-            <col width="15%"></col>
-            <col width="15%"></col>
-            <col width="10%"></col>
-            <col width="10%"></col>
-            <col width="25%"></col>
-            <col width="10%"></col>
-            <col width="10%"></col>
+            <col width="5%">
+            <col width="15%">
+            <col width="15%">
+            <col width="10%">
+            <col width="10%">
+            <col width="25%">
+            <col width="10%">
+            <col width="10%">
           </colgroup>
           <thead>
             <tr>
@@ -105,7 +105,10 @@ export default {
     cmsDatas: [
       { cmsNo: '12345678', title: '풍무양꼬치 구로디지털단지점', apprDtt: '2021-07-04 19:00:00', amt: '53000', tax: '5300' },
       { cmsNo: '23456789', title: '최우영 스시', apprDtt: '2021-07-03 19:00:00', amt: '214000', tax: '21400' },
-      { cmsNo: '34567890', title: '새마을식당 판교점', apprDtt: '2021-07-02 19:00:00', amt: '78500', tax: '7850' }
+      { cmsNo: '34567890', title: '새마을식당 판교점', apprDtt: '2021-07-02 19:00:00', amt: '78500', tax: '7850' },
+      { cmsNo: '45678901', title: '버거킹 서현역점', apprDtt: '2021-07-01 19:00:00', amt: '53000', tax: '5300' },
+      { cmsNo: '56789012', title: '은행골 서현점', apprDtt: '2021-06-30 19:00:00', amt: '214000', tax: '21400' },
+      { cmsNo: '67890123', title: '스시하루 판교점', apprDtt: '2021-06-29 19:00:00', amt: '78500', tax: '7850' }
     ]
   }),
   watch: {

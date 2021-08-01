@@ -1,57 +1,63 @@
 <template>
   <v-stepper
     v-model="step"
-    vertical
   >
-    <v-stepper-step
-      :complete="step > 1"
-      step="1"
-    >
-      법인카드 선택
-    </v-stepper-step>
-    <v-stepper-content step="1">
-      <CmsCardSelects
-        @select-cms-card="selectCmsCard"
-      />
-      <v-btn
-        block
-        color="primary"
-        @click="step = 2"
+    <v-stepper-header>
+      <v-stepper-step
+        :complete="step > 1"
+        step="1"
       >
-        선택
-      </v-btn>
-    </v-stepper-content>
+        법인카드 사용내역 선택
+      </v-stepper-step>
 
-    <v-stepper-step
-      :complete="step > 2"
-      step="2"
-    >
-      법인카드 사용내역 선택
-    </v-stepper-step>
-    <v-stepper-content step="2">
-      <CmsDataTables
-        @select-cms-datas="selectCmsDatas"
-      />
-      <v-btn
-        block
-        color="primary"
-        @click="step = 3"
+      <v-divider />
+
+      <v-stepper-step
+        :complete="step > 2"
+        step="2"
       >
-        선택
-      </v-btn>
-    </v-stepper-content>
+        예산정보 선택
+      </v-stepper-step>
 
-    <v-stepper-step
-      :complete="step > 3"
-      step="3"
-    >
-      예산정보 선택
-    </v-stepper-step>
-    <v-stepper-content step="3">
-      <BudStepper
-        @select-bud-info="selectBudInfo"
-      />
-    </v-stepper-content>
+      <v-divider />
+
+      <v-stepper-step
+        :complete="step > 3"
+        step="3"
+      >
+        상신
+      </v-stepper-step>
+    </v-stepper-header>
+    <v-stepper-items>
+      <v-stepper-content step="1">
+        <CmsCardSelects
+          @select-cms-card="selectCmsCard"
+        />
+        <CmsDataTables
+          @select-cms-datas="selectCmsDatas"
+        />
+        <v-btn
+          block
+          color="primary"
+          @click="step = 2"
+        >
+          선택
+        </v-btn>
+      </v-stepper-content>
+      <v-stepper-content step="2">
+        <BudStepper
+          @select-bud-info="selectBudInfo"
+        />
+      </v-stepper-content>
+      <v-stepper-content step="3">
+        <div class="text-center">
+          <ApprGrpLines
+            :appr-grp-lines="apprGrpLines"
+            :appr-to-ccs="apprToCcs"
+          />
+        </div>
+      </v-stepper-content>
+    </v-stepper-items>
   </v-stepper>
 </template>
 
@@ -59,11 +65,14 @@
 import CmsCardSelects from '@/components/business/budcost/CmsCardSelects.vue'
 import CmsDataTables from '@/components/business/budcost/CmsDataTables.vue'
 import BudStepper from '@/components/business/budcost/BudStepper.vue'
+import ApprGrpLines from '@/components/business/appr/ApprGrpLines.vue'
+
 export default {
   components: {
     CmsCardSelects,
     CmsDataTables,
-    BudStepper
+    BudStepper,
+    ApprGrpLines
   },
   data: () => ({
     step: 1,
@@ -71,7 +80,94 @@ export default {
     cc: null,
     acct: null,
     cmsCard: null,
-    cmsDatas: null
+    cmsDatas: null,
+    apprToCcs: {
+      tos: [
+        {
+          empDeptYn: 'D',
+          cmpCd: 'NX',
+          empDeptNo: 51212,
+          empDeptNm: '재무그룹웨어팀'
+        }
+      ],
+      ccs: [
+        {
+          empDeptYn: 'E',
+          cmpCd: 'NX',
+          empDeptNo: 24687,
+          empDeptNm: '윤호세'
+        }
+      ],
+      bccs: []
+    },
+    apprGrpLines: [
+      {
+        grpNm: null,
+        grpStsNm: '상신',
+        apprLines: [
+          {
+            empNo: 24687,
+            empNm: '윤호세',
+            dutyNm: '팀원',
+            deptNm: '재무그룹웨어팀'
+          }
+        ]
+      },
+      {
+        grpNm: null,
+        grpStsNm: '결재',
+        apprLines: [
+          {
+            empNo: 19063,
+            empNm: '박민성',
+            dutyNm: '팀원',
+            deptNm: '재무그룹웨어팀'
+          },
+          {
+            empNo: 23237,
+            empNm: '최민호3',
+            dutyNm: '팀원',
+            deptNm: '재무그룹웨어팀'
+          }
+        ]
+      },
+      {
+        grpNm: null,
+        grpStsNm: '결재',
+        apprLines: [
+          {
+            empNo: 14838,
+            empNm: '최다희',
+            dutyNm: '팀장',
+            deptNm: '재무그룹웨어팀'
+          }
+        ]
+      },
+      {
+        grpNm: '경비/매입 담당그룹',
+        grpStsNm: '담당',
+        apprLines: [
+          {
+            empNo: 11111,
+            empNm: '나회계',
+            dutyNm: '팀원',
+            deptNm: '회계2팀'
+          },
+          {
+            empNo: 22222,
+            empNm: '박회계',
+            dutyNm: '팀원',
+            deptNm: '회계2팀'
+          },
+          {
+            empNo: 33333,
+            empNm: '정회계',
+            dutyNm: '팀원',
+            deptNm: '회계2팀'
+          }
+        ]
+      }
+    ]
   }),
   methods: {
     selectCmsCard (card) {
@@ -93,7 +189,7 @@ export default {
       this.cc = cc
       this.acct = acct
 
-      this.step = 4
+      this.step = 3
     }
   }
 }
