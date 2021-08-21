@@ -1,77 +1,64 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          차세대 전자결재 서비스, Visual Mock Up Project
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify + Nuxt.js 기반의 재무그룹웨어팀 차세대 전자결재 서비스 목업 프로젝트 입니다.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+    <v-col cols="6">
+      <v-tabs>
+        <v-tab href="#sign">
+          전자결재
+        </v-tab>
+        <v-tab href="#contract">
+          계약관리
+        </v-tab>
+        <v-tab-item id="sign" key="sign">
+          <v-simple-table
+            fixed-header
+            height="500px"
           >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+            <template #default>
+              <colgroup>
+                <col width="85%">
+                <col width="15%">
+              </colgroup>
+              <tbody>
+                <tr>
+                  <td>
+                    제목제목제목제목제목제목제목제목제목제목제목제목
+                  </td>
+                  <td class="text-center">
+                    홍길동
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    제목제목제목제목제목제목제목제목제목제목제목제목
+                  </td>
+                  <td class="text-center">
+                    홍길동
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </v-tab-item>
+        <v-tab-item id="contract" key="contract" class="text-center" style="height:500px;">
+          <h3 class="mt-8">데이터가 존재하지 않습니다.</h3>
+        </v-tab-item>
+      </v-tabs>
+    </v-col>
+    <v-col cols="6">
+      <v-tabs>
+        <v-tab href="#progress">
+          결재진행함
+        </v-tab>
+        <v-tab href="#pending">
+          결재대기함
+        </v-tab>
+        <v-tab-item id="progress" key="progress" class="text-center" style="height:500px;">
+          <h3 class="mt-8">데이터가 존재하지 않습니다.</h3>
+        </v-tab-item>
+        <v-tab-item id="pending" key="pending" class="text-center" style="height:500px;">
+          <h3 class="mt-8">데이터가 존재하지 않습니다.</h3>
+        </v-tab-item>
+      </v-tabs>
     </v-col>
   </v-row>
 </template>
