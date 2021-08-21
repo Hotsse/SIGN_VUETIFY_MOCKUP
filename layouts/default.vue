@@ -55,6 +55,7 @@
       </v-btn>
     </v-navigation-drawer>
     <v-app-bar
+      class="appbarBgColor appbarColor--text"
       :clipped-left="clipped"
       fixed
       app
@@ -62,13 +63,12 @@
       <v-spacer />
       <v-menu offset-y left>
         <template #activator="{ on, attrs }">
-          <a
-            class="white--text"
+          <span
             v-bind="attrs"
             v-on="on"
           >
             Menu <v-icon>mdi-chevron-down</v-icon>
-          </a>
+          </span>
         </template>
         <v-list>
           <v-list-item
@@ -137,7 +137,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-main>
+    <v-main class="bgcolor">
       <v-container>
         <Nuxt />
       </v-container>
