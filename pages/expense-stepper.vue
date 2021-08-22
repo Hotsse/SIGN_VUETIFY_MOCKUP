@@ -7,7 +7,7 @@
         :complete="step > 1"
         step="1"
       >
-        법인카드 사용내역 선택
+        예산정보 선택
       </v-stepper-step>
 
       <v-divider />
@@ -16,7 +16,7 @@
         :complete="step > 2"
         step="2"
       >
-        예산정보 선택
+        법인카드 사용내역 선택
       </v-stepper-step>
 
       <v-divider />
@@ -30,27 +30,34 @@
     </v-stepper-header>
     <v-stepper-items>
       <v-stepper-content step="1">
-        <CmsCardSelects
-          @select-cms-card="selectCmsCard"
-        />
-        <CmsDataTables
-          @select-cms-datas="selectCmsDatas"
-        />
-        <v-btn
-          block
-          color="primary"
-          @click="step = 2"
-        >
-          선택
-        </v-btn>
-      </v-stepper-content>
-      <v-stepper-content step="2">
         <BudStepper
           @select-bud-info="selectBudInfo"
         />
       </v-stepper-content>
+      <v-stepper-content step="2">
+        <CmsCardSelects
+          @select-cms-card="selectCmsCard"
+        />
+        <CmsDataTables
+          ref="cmsDatas"
+        />
+        <v-btn
+          block
+          color="primary"
+          @click="selectCmsDatas()"
+        >
+          선택
+        </v-btn>
+      </v-stepper-content>
       <v-stepper-content step="3">
+        <div>
+        </div>
         <div class="text-center">
+          <p>bud : {{ bud != null ? bud.title : '' }}</p>
+          <p>cc : {{ cc != null ? cc.title : '' }}</p>
+          <p>acct : {{ acct != null ? acct.title : '' }}</p>
+          <p>cmsCard : {{ cmsCard }}</p>
+          <p>cmsDatas : {{ cmsDatas }}</p>
           <ApprGrpLines
             :appr-grp-lines="apprGrpLines"
             :appr-to-ccs="apprToCcs"
@@ -170,16 +177,6 @@ export default {
     ]
   }),
   methods: {
-    selectCmsCard (card) {
-      console.log(card)
-
-      this.cmsCard = card
-    },
-    selectCmsDatas (cmsDatas) {
-      console.log(cmsDatas)
-
-      this.cmsDatas = cmsDatas
-    },
     selectBudInfo (bud, cc, acct) {
       console.log(bud)
       console.log(cc)
@@ -189,7 +186,21 @@ export default {
       this.cc = cc
       this.acct = acct
 
-      this.step = 3
+      this.step = 2
+    },
+    selectCmsCard (card) {
+      console.log(card)
+
+      this.cmsCard = card
+      this.$refs.cmsDatas.setCmsCard(card)
+    },
+    selectCmsDatas () {
+      const datas = this.$refs.cmsDatas.selectCmsDatas()
+      if (datas != null) {
+        console.log(datas)
+        this.cmsDatas = datas
+        this.step = 3
+      }
     }
   }
 }

@@ -165,6 +165,25 @@
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      :vertical="true"
+      :centered="true"
+    >
+      {{ text }}
+
+      <template #action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          닫기
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -209,8 +228,20 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'SIGN WEB'
+      title: 'SIGN WEB',
+      snackbar: false,
+      text: 'My timeout is set to 2000.',
+      timeout: 2000
     }
+  },
+  created () {
+    this.$nuxt.$on('onSnackBar', (text, timeout) => {
+      this.text = text
+      this.snackbar = true
+      if (!timeout) {
+        this.timeout = 0
+      }
+    })
   }
 }
 </script>
