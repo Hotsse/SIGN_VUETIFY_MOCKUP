@@ -67,7 +67,7 @@
             v-bind="attrs"
             v-on="on"
           >
-            Menu <v-icon>mdi-chevron-down</v-icon>
+            Menu <v-icon dark>mdi-chevron-down</v-icon>
           </span>
         </template>
         <v-list>
