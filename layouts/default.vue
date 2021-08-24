@@ -7,7 +7,7 @@
       fixed
       app
     >
-      <v-list-item>
+      <v-list-item href="/">
         <v-list-item-content>
           <v-list-item-title class="text-h5 font-weight-bold">
             <v-icon :x-large="!miniVariant">
@@ -21,6 +21,48 @@
       </v-list-item>
       <v-divider />
       <v-list>
+        <v-list-group
+          no-action
+          prepend-icon="mdi-menu"
+        >
+          <template #activator>
+            <v-list-item-title>경비 신청</v-list-item-title>
+          </template>
+          <v-list-item
+            to="/expense"
+          >
+            <v-list-item-title>기본</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            to="/expense-stepper"
+          >
+            <v-list-item-title>Stepper,Horizontal</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            to="/expense-stepper-v"
+          >
+            <v-list-item-title>Stepper,Vertical</v-list-item-title>
+          </v-list-item>
+        </v-list-group>
+        <v-list-group
+          no-action
+          prepend-icon="mdi-menu"
+        >
+          <template #activator>
+            <v-list-item-title>예약</v-list-item-title>
+          </template>
+          <v-list-item
+            to="/calendar"
+          >
+            <v-list-item-title>회의실</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            to="/calendar2"
+          >
+            <v-list-item-title>주단위 캘린더</v-list-item-title>
+          </v-list-item>
+        </v-list-group>
+        <!--
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -35,8 +77,8 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
+        -->
       </v-list>
-
       <template #append>
         <div class="pa-2">
           <v-btn block>
@@ -245,3 +287,11 @@ export default {
   }
 }
 </script>
+<style>
+.v-list-item__icon.v-list-group__header__prepend-icon {
+  margin-right: 10px !important;
+}
+.v-application--is-ltr .v-list-group--no-action > .v-list-group__items > .v-list-item {
+  padding-left: 50px !important;
+}
+</style>
