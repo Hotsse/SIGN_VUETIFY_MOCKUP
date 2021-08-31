@@ -31,6 +31,7 @@
     <v-stepper-items>
       <v-stepper-content step="1">
         <BudStepper
+          ref="budStepper"
           @select-bud-info="selectBudInfo"
         />
       </v-stepper-content>
@@ -41,26 +42,104 @@
         <CmsDataTables
           ref="cmsDatas"
         />
-        <v-btn
-          block
-          color="primary"
-          @click="selectCmsDatas()"
-        >
-          선택
-        </v-btn>
+        <div class="mt-8">
+          <StepperNav
+            @prev-callback="step=1;$refs.budStepper.initialize();"
+            @next-callback="selectCmsDatas()"
+          />
+        </div>
       </v-stepper-content>
       <v-stepper-content step="3">
         <div>
-        </div>
-        <div class="text-center">
-          <p>bud : {{ bud != null ? bud.title : '' }}</p>
-          <p>cc : {{ cc != null ? cc.title : '' }}</p>
-          <p>acct : {{ acct != null ? acct.title : '' }}</p>
-          <p>cmsCard : {{ cmsCard }}</p>
-          <p>cmsDatas : {{ cmsDatas }}</p>
           <ApprGrpLines
+            class="text-center"
             :appr-grp-lines="apprGrpLines"
             :appr-to-ccs="apprToCcs"
+          />
+        </div>
+        <div class="mt-8">
+          <v-simple-table>
+            <template #default>
+              <tbody>
+                <tr>
+                  <td>예산</td>
+                  <td class="text-right pr-4">
+                    {{ bud != null ? bud.title : '' }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>프로젝트</td>
+                  <td class="text-right pr-4">
+                    {{ cc != null ? cc.title : '' }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>회계계정</td>
+                  <td class="text-right pr-4">
+                    {{ acct != null ? acct.title : '' }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>법인카드</td>
+                  <td class="text-right pr-4">
+                    {{ cmsCard }}
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+          <v-expansion-panels>
+            <v-expansion-panel
+              v-for="(cmsData,i) in cmsDatas"
+              :key="i"
+            >
+              <v-expansion-panel-header>
+                {{ cmsData.title }}
+                <span class="text-right mr-3">
+                  {{ cmsData.amt }} 원
+                </span>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-simple-table>
+                  <template #default>
+                    <tbody>
+                      <tr>
+                        <td>사용내역</td>
+                        <td class="text-right mr-3">
+                          {{ cmsData.content }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>승인일</td>
+                        <td class="text-right mr-3">
+                          {{ cmsData.apprDtt }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>공급가액</td>
+                        <td class="text-right mr-3">
+                          {{ cmsData.amt }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>세액</td>
+                        <td class="text-right mr-3">
+                          {{ cmsData.tax }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </div>
+        <div class="mt-8">
+          <StepperNav
+            prev-name="이전"
+            next-name="상신"
+            @prev-callback="step=2"
+            @next-callback=";"
           />
         </div>
       </v-stepper-content>
@@ -72,6 +151,7 @@
 import CmsCardSelects from '@/components/business/budcost/CmsCardSelects.vue'
 import CmsDataTables from '@/components/business/budcost/CmsDataTables.vue'
 import BudStepper from '@/components/business/budcost/BudStepper.vue'
+import StepperNav from '@/components/business/common/StepperNav.vue'
 import ApprGrpLines from '@/components/business/appr/ApprGrpLines.vue'
 
 export default {
@@ -79,6 +159,7 @@ export default {
     CmsCardSelects,
     CmsDataTables,
     BudStepper,
+    StepperNav,
     ApprGrpLines
   },
   data: () => ({
