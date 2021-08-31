@@ -86,6 +86,12 @@ export default {
       this.acct = acct
       this.step = 4
       this.$emit('select-bud-info', this.bud, this.cc, this.acct)
+    },
+    initialize () {
+      this.bud = null
+      this.cc = null
+      this.acct = null
+      this.step = 1
     }
   }
 }
